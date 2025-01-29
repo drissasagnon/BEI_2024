@@ -1,3 +1,8 @@
+####################################################################
+#                       BEI EasyMile                               #
+#   Moez CHAGRAOUI, Rayen YADIR, Yassine ABDELILLAH, Drissa SAGNON #
+####################################################################
+# failure_log.txt
 
 === FAILURE MODE ACTIVATED ===
 🚨 ECU failure detected at: 2025-01-29 15:00:01
@@ -33,4 +38,379 @@
 
 ✅ FAILURE MODE DEACTIVATED
 🕒 DEACTIVATION ECU failure detected at: 2025-01-29 15:19:25
+============================================
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 15:29:06
+📍 Vehicle Position: (3.58, -9.50)
+🚦 Switching to safety trajectory...
+
+✅ FAILURE MODE DEACTIVATED
+🕒 DEACTIVATION ECU failure detected at: 2025-01-29 15:29:15
+============================================
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 15:39:59
+📍 Vehicle Position: (3.45, -9.42)
+🚦 Switching to safety trajectory...
+
+✅ FAILURE MODE DEACTIVATED
+🕒 DEACTIVATION ECU failure detected at: 2025-01-29 15:40:08
+============================================
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 16:54:29
+📍 Vehicle Position: (1.22, 0.38)
+🚦 Switching to safety trajectory...
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 16:55:12
+📍 Vehicle Position: (1.30, 0.44)
+🚦 Switching to safety trajectory...
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 16:55:48
+📍 Vehicle Position: (1.54, 0.62)
+🚦 Switching to safety trajectory...
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 16:56:06
+📍 Vehicle Position: (1.05, 0.28)
+🚦 Switching to safety trajectory...
+
+✅ FAILURE MODE DEACTIVATED
+🕒 DEACTIVATION ECU failure detected at: 2025-01-29 16:56:14
+============================================
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 16:56:20
+📍 Vehicle Position: (6.95, 4.52)
+🚦 Switching to safety trajectory...
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 17:00:26
+📍 Vehicle Position: (1.46, 0.56)
+🚦 Switching to safety trajectory...
+
+✅ FAILURE MODE DEACTIVATED
+🕒 DEACTIVATION ECU failure detected at: 2025-01-29 17:00:34
+============================================
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 17:00:41
+📍 Vehicle Position: (7.40, 4.10)
+🚦 Switching to safety trajectory...
+
+✅ FAILURE MODE DEACTIVATED
+🕒 DEACTIVATION ECU failure detected at: 2025-01-29 17:00:50
+============================================
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 17:08:27
+📍 Vehicle Position: (1.54, 0.62)
+🚦 Switching to safety trajectory...
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 17:11:03
+📍 Vehicle Position: (1.22, 0.38)
+🚦 Switching to safety trajectory...
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 17:12:12
+📍 Vehicle Position: (1.22, 0.38)
+🚦 Switching to safety trajectory...
+
+✅ FAILURE MODE DEACTIVATED
+🕒 DEACTIVATION ECU failure detected at: 2025-01-29 17:12:23
+============================================
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 17:30:50
+📍 Vehicle Position: (7.68, 3.62)
+🚦 Switching to safety trajectory...
+
+✅ FAILURE MODE DEACTIVATED
+🕒 DEACTIVATION ECU failure detected at: 2025-01-29 17:31:02
+============================================
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 18:20:51
+📍 Vehicle Position: (1.91, 0.96)
+🚦 Switching to safety trajectory...
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 18:21:42
+📍 Vehicle Position: (1.14, 0.33)
+🚦 Switching to safety trajectory...
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 18:24:38
+📍 Vehicle Position: (1.46, 0.56)
+🚦 Switching to safety trajectory...
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 18:27:39
+📍 Vehicle Position: (1.46, 0.56)
+🚦 Switching to safety trajectory...
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 18:32:31
+📍 Vehicle Position: (1.62, 0.68)
+🚦 Switching to safety trajectory...
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 18:33:24
+📍 Vehicle Position: (1.54, 0.62)
+🚦 Switching to safety trajectory...
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 18:35:19
+📍 Vehicle Position: (1.30, 0.44)
+🚦 Switching to safety trajectory...
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 18:36:01
+📍 Vehicle Position: (0.96, 0.23)
+🚦 Switching to safety trajectory...
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 18:36:55
+📍 Vehicle Position: (1.14, 0.33)
+🚦 Switching to safety trajectory...
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 18:38:47
+📍 Vehicle Position: (1.84, 0.89)
+🚦 Switching to safety trajectory...
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 18:39:49
+📍 Vehicle Position: (1.46, 0.56)
+🚦 Switching to safety trajectory...
+
+✅ FAILURE MODE DEACTIVATED
+🕒 DEACTIVATION ECU failure detected at: 2025-01-29 18:39:59
+============================================
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 18:40:09
+📍 Vehicle Position: (8.63, 2.40)
+🚦 Switching to safety trajectory...
+
+✅ FAILURE MODE DEACTIVATED
+🕒 DEACTIVATION ECU failure detected at: 2025-01-29 18:40:17
+============================================
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 18:41:23
+📍 Vehicle Position: (1.98, 1.03)
+🚦 Switching to safety trajectory...
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 18:41:50
+📍 Vehicle Position: (1.38, 0.50)
+🚦 Switching to safety trajectory...
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 18:42:26
+📍 Vehicle Position: (1.05, 0.28)
+🚦 Switching to safety trajectory...
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 18:42:49
+📍 Vehicle Position: (1.54, 0.62)
+🚦 Switching to safety trajectory...
+
+✅ FAILURE MODE DEACTIVATED
+🕒 DEACTIVATION ECU failure detected at: 2025-01-29 18:42:57
+============================================
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 18:43:05
+📍 Vehicle Position: (8.17, 3.05)
+🚦 Switching to safety trajectory...
+
+✅ FAILURE MODE DEACTIVATED
+🕒 DEACTIVATION ECU failure detected at: 2025-01-29 18:43:12
+============================================
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 18:44:24
+📍 Vehicle Position: (1.14, 0.33)
+🚦 Switching to safety trajectory...
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 18:48:10
+📍 Vehicle Position: (2.83, 2.14)
+🚦 Switching to safety trajectory...
+
+✅ FAILURE MODE DEACTIVATED
+🕒 DEACTIVATION ECU failure detected at: 2025-01-29 18:48:25
+============================================
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 19:01:29
+📍 Vehicle Position: (0.96, 0.23)
+🚦 Switching to safety trajectory...
+
+✅ FAILURE MODE DEACTIVATED
+🕒 DEACTIVATION ECU failure detected at: 2025-01-29 19:01:36
+============================================
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 19:15:56
+📍 Vehicle Position: (7.51, 3.73)
+🚦 Switching to safety trajectory...
+
+✅ FAILURE MODE DEACTIVATED
+🕒 DEACTIVATION ECU failure detected at: 2025-01-29 19:16:04
+============================================
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 19:46:12
+📍 Vehicle Position: (1.91, 0.96)
+🚦 Switching to safety trajectory...
+
+✅ FAILURE MODE DEACTIVATED
+🕒 DEACTIVATION ECU failure detected at: 2025-01-29 19:46:22
+============================================
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 19:58:36
+📍 Vehicle Position: (2.66, 1.89)
+🚦 Switching to safety trajectory...
+
+✅ FAILURE MODE DEACTIVATED
+🕒 DEACTIVATION ECU failure detected at: 2025-01-29 19:58:45
+============================================
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 20:14:09
+📍 Vehicle Position: (2.31, 1.41)
+🚦 Switching to safety trajectory...
+
+✅ FAILURE MODE DEACTIVATED
+🕒 DEACTIVATION ECU failure detected at: 2025-01-29 20:14:18
+============================================
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 20:25:09
+📍 Vehicle Position: (7.45, 3.89)
+🚦 Switching to safety trajectory...
+
+✅ FAILURE MODE DEACTIVATED
+🕒 DEACTIVATION ECU failure detected at: 2025-01-29 20:25:17
+============================================
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 20:41:47
+📍 Vehicle Position: (1.62, 0.65)
+🚦 Switching to safety trajectory...
+
+✅ FAILURE MODE DEACTIVATED
+🕒 DEACTIVATION ECU failure detected at: 2025-01-29 20:41:55
+============================================
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 20:51:39
+📍 Vehicle Position: (2.30, 1.39)
+🚦 Switching to safety trajectory...
+
+✅ FAILURE MODE DEACTIVATED
+🕒 DEACTIVATION ECU failure detected at: 2025-01-29 20:51:47
+============================================
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 20:53:07
+📍 Vehicle Position: (3.59, 3.40)
+🚦 Switching to safety trajectory...
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 21:05:35
+📍 Vehicle Position: (1.69, 0.72)
+🚦 Switching to safety trajectory...
+
+✅ FAILURE MODE DEACTIVATED
+🕒 DEACTIVATION ECU failure detected at: 2025-01-29 21:05:42
+============================================
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 21:22:17
+📍 Vehicle Position: (9.30, 1.38)
+🚦 Switching to safety trajectory...
+
+✅ FAILURE MODE DEACTIVATED
+🕒 DEACTIVATION ECU failure detected at: 2025-01-29 21:22:26
+============================================
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 21:23:50
+📍 Vehicle Position: (1.32, -7.29)
+🚦 Switching to safety trajectory...
+
+✅ FAILURE MODE DEACTIVATED
+🕒 DEACTIVATION ECU failure detected at: 2025-01-29 21:24:00
+============================================
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 21:31:37
+📍 Vehicle Position: (1.97, 1.01)
+🚦 Switching to safety trajectory...
+
+✅ FAILURE MODE DEACTIVATED
+🕒 DEACTIVATION ECU failure detected at: 2025-01-29 21:31:44
+============================================
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 21:52:37
+📍 Vehicle Position: (1.83, 0.86)
+🚦 Switching to safety trajectory...
+
+✅ FAILURE MODE DEACTIVATED
+🕒 DEACTIVATION ECU failure detected at: 2025-01-29 21:52:45
+============================================
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 21:52:57
+📍 Vehicle Position: (9.97, -0.03)
+🚦 Switching to safety trajectory...
+
+✅ FAILURE MODE DEACTIVATED
+🕒 DEACTIVATION ECU failure detected at: 2025-01-29 21:53:05
+============================================
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 21:53:58
+📍 Vehicle Position: (2.36, 1.46)
+🚦 Switching to safety trajectory...
+
+✅ FAILURE MODE DEACTIVATED
+🕒 DEACTIVATION ECU failure detected at: 2025-01-29 21:54:06
+============================================
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 21:58:51
+📍 Vehicle Position: (1.97, 1.01)
+🚦 Switching to safety trajectory...
+
+✅ FAILURE MODE DEACTIVATED
+🕒 DEACTIVATION ECU failure detected at: 2025-01-29 21:59:01
+============================================
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 22:01:22
+📍 Vehicle Position: (10.16, -0.63)
+🚦 Switching to safety trajectory...
+
+✅ FAILURE MODE DEACTIVATED
+🕒 DEACTIVATION ECU failure detected at: 2025-01-29 22:01:30
+============================================
+
+=== FAILURE MODE ACTIVATED ===
+🚨 ECU failure detected at: 2025-01-29 22:02:27
+📍 Vehicle Position: (3.70, -9.56)
+🚦 Switching to safety trajectory...
+
+✅ FAILURE MODE DEACTIVATED
+🕒 DEACTIVATION ECU failure detected at: 2025-01-29 22:02:38
 ============================================

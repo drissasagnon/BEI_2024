@@ -1,3 +1,9 @@
+####################################################################
+#                       BEI EasyMile                               #
+#   Moez CHAGRAOUI, Rayen YADIR, Yassine ABDELILLAH, Drissa SAGNON #
+####################################################################
+# IHM.py
+
 import os
 import time
 import winsound
@@ -41,31 +47,26 @@ class StarterCode(QWidget):
         """
         speed = 1  # Initial speed
         self.ui.time += timeUpdate
+        # Initialize steering_angle with a default value
+        steering_angle = 0
 
         # Failure mode activated (ECU failure)
         if self.ui.failure_mode:
-            # Gradually reduce speed (simulate braking)
-            if self.ui.velocity_temp[-1] > 0.5:
-                speed = max(0.5, self.ui.velocity_temp[-1] - 0.1)
-            else:
-                speed = self.ui.velocity_temp[-1]  # Keep speed if already low
-
-            # Ensure parking trajectory is used
-            if self.ui.time < 5:  
-                steering_angle = autopilot_step(
-                    self.ui.pos_x_temp, self.ui.pos_y_temp, self.ui.parking_trajectory, self.ui.theta_temp, timeUpdate, speed
-                )
-            else:
-                speed = 0  # Stop vehicle after 5s
-                steering_angle = 0
-                pos_x = self.ui.pos_x_temp[-1]
-                pos_y = self.ui.pos_y_temp[-1]
-                self.ui.error_message_box.setText(
-                    f"✅ Vehicle stopped in a safe zone.\n"
-                    f"📍 Final position: ({pos_x:.2f}, {pos_y:.2f})"
-                )
-
+            speed, steering_angle, stop_message = safety_mecanism(
+            True,
+            self.ui.path,
+            self.ui.pos_x_temp,
+            self.ui.pos_y_temp,
+            self.ui.theta_temp,
+            self.ui.velocity_temp,
+            self.ui.time,
+            timeUpdate
+            )
             self.ui.steering_temp.append(steering_angle)
+            # Display stop message if vehicle has halted
+            if stop_message:
+                self.ui.error_message_box.setText(stop_message)
+                
 
         # Autopilot mode activated (only if failure mode is deactivated)
         elif self.ui.autopilot_is_pushed:
@@ -76,14 +77,19 @@ class StarterCode(QWidget):
 
         # Manual mode activated
         if self.ui.manual_mode:
-            self.ui.update_manual_control()
+            steering_angle = self.ui.manual_steering_angle
 
-        # Update the vehicle's position based on the steering angle
-        direction = self.ui.theta_temp[-1]
+        # Update the position using VehicleModel
+        self.ui.vehicle_model.update_position(steering_angle, speed, timeUpdate)
+
+        # Update variables used for display
+        pos_x, pos_y, theta = self.ui.vehicle_model.get_position()
+        self.ui.pos_x_temp.append(pos_x)
+        self.ui.pos_y_temp.append(pos_y)
+        self.ui.theta_temp.append(theta)
         self.ui.velocity_temp.append(speed)
-        self.ui.pos_x_temp.append(self.ui.pos_x_temp[-1] + speed * np.cos(direction) * timeUpdate)
-        self.ui.pos_y_temp.append(self.ui.pos_y_temp[-1] + speed * np.sin(direction) * timeUpdate)
-        # ✅ Compute the error between the calculated and applied steering angle
+        self.ui.steering_temp.append(steering_angle)
+        # Compute the error between the calculated and applied steering angle
         steering_angle_applied = self.ui.steering_temp[-1] if self.ui.steering_temp else 0
         steering_error = abs(steering_angle - steering_angle_applied)
 
@@ -95,7 +101,8 @@ class Interface(QWidget):
         super().__init__()
 
         # Generate the trajectory using wpimath
-        self.path, self.left_border, self.left_border1, self.left_border2, self.right_border = generate_trajectory()
+        self.path, self.outer_left_boundary, self.middle_left_boundary, self.inner_left_boundary, self.right_boundary = generate_trajectory()
+
 
         # Initialize the VehicleModel object
         self.vehicle_model = VehicleModel()  # Model to manage vehicle's position and orientation
@@ -222,13 +229,7 @@ class Interface(QWidget):
             )
             self.error_message_box.setStyleSheet("background-color: yellow; color: black;")
             self.blink_timer.start(500) 
-            # Generate a new parking trajectory
-            self.parking_trajectory = safety_mecanism(
-                True,
-                self.path,
-                (self.pos_x_temp[-1], self.pos_y_temp[-1]),
-                self.velocity_temp[-1]
-            )
+            
             self.time = 0
             # 📝 Log failure event
             with open(log_file_path, "a", encoding="utf-8") as log_file:
@@ -279,23 +280,14 @@ class Interface(QWidget):
         if not self.theta_temp:
             return
 
-        # Update vehicle position
-        pos_x, pos_y = self.pos_x_temp[-1], self.pos_y_temp[-1]
-        theta = self.theta_temp[-1]
+        # Récupérer la position actuelle et l'orientation du véhicule
+        pos_x, pos_y, theta = self.vehicle_model.get_position()
 
-        rectangle_x = np.array([-1, 1, 1, -1, -1])
-        rectangle_y = np.array([-0.5, -0.5, 0.5, 0.5, -0.5])
-
-        rotation_matrix = np.array([
-            [np.cos(theta), -np.sin(theta)],
-            [np.sin(theta), np.cos(theta)]
-        ])
-        rotated_rectangle = np.dot(rotation_matrix, np.vstack((rectangle_x, rectangle_y)))
-        rotated_rectangle[0, :] += pos_x
-        rotated_rectangle[1, :] += pos_y
+        # Obtenir le rectangle représentant le véhicule
+        rotated_rectangle = self.vehicle_model.get_rectangle()
 
         self.plot_simulator.clear()
-        self.plot_path()  # Draw trajectory
+        self.plot_path()  # Dessiner la trajectoire
         self.plot_simulator.plot(rotated_rectangle[0, :], rotated_rectangle[1, :])
         self.plot_simulator.plot(
             [pos_x],
@@ -308,7 +300,7 @@ class Interface(QWidget):
             name="Vehicle"
         )
 
-        # Update speed and steering plots
+        # Mise à jour des graphes de vitesse et d'angle de direction
         self.plot_speed.clear()
         self.plot_speed.plot(
             [t for t in range(len(self.velocity_temp))],
@@ -327,38 +319,41 @@ class Interface(QWidget):
             self.steering_error_temp,
             pen=pg.mkPen('g', width=2)
         )
+
     def plot_path(self):
         """Plots the trajectory on the simulator."""
         path_x, path_y = zip(*self.path)
-        left_x, left_y = zip(*self.left_border)
-        left_x1, left_y1 = zip(*self.left_border1)
-        left_x2, left_y2 = zip(*self.left_border2)
-        right_x, right_y = zip(*self.right_border)
+        outer_left_x, outer_left_y = zip(*self.outer_left_boundary)
+        middle_left_x, middle_left_y = zip(*self.middle_left_boundary)
+        inner_left_x, inner_left_y = zip(*self.inner_left_boundary)
+        right_x, right_y = zip(*self.right_boundary)
+
         self.plot_simulator.plot(
             path_x, path_y,
             pen=pg.mkPen('b', width=2, style=pg.QtCore.Qt.DashLine),  # Blue line for trajectory
             name="Path"
         )
         self.plot_simulator.plot(
-            left_x, left_y,
-            pen=pg.mkPen('r', width=2),  # Red line for left border
-            name="Left_border"
+            outer_left_x, outer_left_y,
+            pen=pg.mkPen('r', width=2),  # Red line for outer left boundary
+            name="Outer Left Boundary"
         )
         self.plot_simulator.plot(
-            left_x1, left_y1,
-            pen=pg.mkPen('w', width=2),  # White line for left border1
-            name="Left_border1"
+            inner_left_x, inner_left_y,
+            pen=pg.mkPen('w', width=2),  # White line for middle left boundary
+            name="Middle Left Boundary"
         )
         self.plot_simulator.plot(
-            left_x2, left_y2,
-            pen=pg.mkPen('b', width=2, style=pg.QtCore.Qt.DashLine),  # Blue dashed line for left border2
-            name="Left_border2"
+            middle_left_x, middle_left_y,
+            pen=pg.mkPen('b', width=2, style=pg.QtCore.Qt.DashLine),  # Blue dashed line for inner left boundary
+            name="Inner Left Boundary"
         )
         self.plot_simulator.plot(
             right_x, right_y,
-            pen=pg.mkPen('r', width=2),  # Red line for right border
-            name="Right_border"
+            pen=pg.mkPen('r', width=2),  # Red line for right boundary
+            name="Right Boundary"
         )
+
     def keyPressEvent(self, event):
         """
         Handle key presses for manual control.

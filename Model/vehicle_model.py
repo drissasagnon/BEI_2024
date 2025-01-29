@@ -1,4 +1,9 @@
-# modele-vehicule.py
+####################################################################
+#                       BEI EasyMile                               #
+#   Moez CHAGRAOUI, Rayen YADIR, Yassine ABDELILLAH, Drissa SAGNON #
+####################################################################
+# vehicule_model.py
+
 import numpy as np
 
 class VehicleModel:

@@ -1,4 +1,9 @@
+####################################################################
+#                       BEI EasyMile                               #
+#   Moez CHAGRAOUI, Rayen YADIR, Yassine ABDELILLAH, Drissa SAGNON #
+####################################################################
 # autopilot.py
+
 from Lateral_control.lateral_control_pure_pursuit import lateral_control_pure_pursuit
 
 def autopilot_step(pos_x_temp, pos_y_temp, path, theta_temp, time_update,speed):

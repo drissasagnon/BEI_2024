@@ -1,10 +1,16 @@
+####################################################################
+#                       BEI EasyMile                               #
+#   Moez CHAGRAOUI, Rayen YADIR, Yassine ABDELILLAH, Drissa SAGNON #
+####################################################################
+# generate_trajectory.py
+
 import numpy as np
 from wpimath.geometry import Pose2d, Rotation2d, Translation2d
 from wpimath.trajectory import TrajectoryGenerator, TrajectoryConfig
 
 def generate_trajectory():
     """
-    Generate a closed-loop race-like trajectory with red borders.
+    Generate a closed-loop race-like trajectory with defined lane boundaries.
     """
     trajectory_one = TrajectoryGenerator.generateTrajectory(
         Pose2d(0, 0, Rotation2d.fromDegrees(0)),
@@ -23,11 +29,11 @@ def generate_trajectory():
     combined_trajectory = trajectory_one.states() + trajectory_two.states()
     path = [(state.pose.X(), state.pose.Y()) for state in combined_trajectory]
 
-    left_border = []
-    left_border1 = []
-    left_border2 = []
-    right_border = []
-    offset = 1.0  # Distance from the main path
+    outer_left_boundary = []
+    middle_left_boundary = []
+    inner_left_boundary = []
+    right_boundary = []
+    lane_offset = 1.0  # Distance from the main path
 
     for i in range(len(path)):
         current = np.array(path[i])
@@ -43,12 +49,12 @@ def generate_trajectory():
         avg_direction = avg_direction / np.linalg.norm(avg_direction)
 
         # Calculate perpendicular vector
-        normal = np.array([-avg_direction[1], avg_direction[0]])
+        perpendicular_vector = np.array([-avg_direction[1], avg_direction[0]])
 
-        # Calculate left and right borders
-        left_border.append(tuple(current + offset*3 * normal))
-        left_border2.append(tuple(current + offset*2 * normal))
-        left_border1.append(tuple(current + offset * normal))
-        right_border.append(tuple(current - offset * normal))
+        # Calculate lane boundaries
+        outer_left_boundary.append(tuple(current + lane_offset * 3 * perpendicular_vector))
+        middle_left_boundary.append(tuple(current + lane_offset * 2 * perpendicular_vector))
+        inner_left_boundary.append(tuple(current + lane_offset * perpendicular_vector))
+        right_boundary.append(tuple(current - lane_offset * perpendicular_vector))
 
-    return path, left_border,left_border1,left_border2, right_border
+    return path, outer_left_boundary, middle_left_boundary, inner_left_boundary, right_boundary
