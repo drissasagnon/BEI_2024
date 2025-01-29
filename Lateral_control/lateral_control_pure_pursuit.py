@@ -1,41 +1,99 @@
+####################################################################
+#                       BEI EasyMile                               #
+#   Moez CHAGRAOUI, Rayen YADIR, Yassine ABDELILLAH, Drissa SAGNON #
+####################################################################
+#lateral_control_pure_pursuit.py
+
 import numpy as np
+import json
+import os
 
-def lateral_control(pos_x_temp, pos_y_temp, path):
+# Load Pure Pursuit control parameters from JSON
+CONFIG_PATH = os.path.join(os.path.dirname(__file__), "lateral_control_pure_pursuit_parameters.json")
+
+def load_pure_pursuit_config():
+    """Load Pure Pursuit control parameters from a JSON file."""
+    try:
+        with open(CONFIG_PATH, "r") as file:
+            return json.load(file)
+    except FileNotFoundError:
+        print(f"Error: Configuration file not found at {CONFIG_PATH}")
+        return None
+    except json.JSONDecodeError:
+        print(f"Error: Failed to decode JSON from {CONFIG_PATH}")
+        return None
+
+# Load configuration
+pure_pursuit_config = load_pure_pursuit_config()
+
+# Ensure configuration is loaded properly
+if pure_pursuit_config is None:
+    raise RuntimeError("Failed to load Pure Pursuit configuration. Please check 'lateral_control_pure_pursuit_parameters.json'.")
+
+# Extract parameters
+Kdd = pure_pursuit_config["lookahead_gain"]  # Lookahead gain factor
+min_lookahead_distance = pure_pursuit_config["min_lookahead_distance"]  # Minimum lookahead distance
+default_speed = pure_pursuit_config["default_speed"]  # Default vehicle speed
+max_steering_angle = np.radians(pure_pursuit_config["max_steering_angle_deg"])  # Max steering angle in radians
+L = pure_pursuit_config["L"]  # Wheelbase of the vehicle (meters)
+
+def lateral_control_pure_pursuit(pos_x_temp, pos_y_temp, path, speed=default_speed):
     """
-    Contrôle latéral pour calculer l'angle de braquage basé sur la trajectoire et les nouvelles formules pour le braquage.
+    Pure Pursuit lateral control for calculating the steering angle.
+
+    Parameters:
+        pos_x_temp (list): List of the vehicle's x positions.
+        pos_y_temp (list): List of the vehicle's y positions.
+        path (list): List of (x, y) points representing the trajectory.
+        speed (float): Vehicle speed (m/s), default from config.
+
+    Returns:
+        float: Steering angle (radians).
     """
-    
-    # Checks if the trajectory (path) and the vehicle's positions (pos_x_temp and pos_y_temp) are valid
-    if not path or not pos_x_temp or not pos_y_temp:
-        return 0  # If the data is invalid, return 0 to prevent any calculation error
+    if not path or len(pos_x_temp) < 2 or len(pos_y_temp) < 2:
+        return 0  # Not enough data to compute steering angle
 
-    # Ensure that pos_x_temp and pos_y_temp are lists of numerical values, not nested lists
-    current_pos = np.array([pos_x_temp[-1], pos_y_temp[-1]])  # Last position of the vehicle (x, y)
+    # Get current position
+    current_pos = np.array([pos_x_temp[-1], pos_y_temp[-1]])
 
-    # Find the closest point on the trajectory by calculating the distance between the vehicle and each point on the trajectory
+    # Compute distances from current position to all path points
     distances = [np.linalg.norm(current_pos - np.array(p)) for p in path]
-    closest_idx = np.argmin(distances)  # Index of the trajectory point closest to the vehicle
 
-    # Select the next target point on the trajectory, after the closest point
-    next_idx = (closest_idx + 1) % len(path)  # Ensure to return to the beginning of the trajectory if the end is reached
-    target_point = np.array(path[next_idx])  # The next target point on the trajectory
+    # Find closest path point
+    closest_idx = np.argmin(distances)
 
-    # Calculate the trajectory vector between the vehicle's current position and the target point
+    # Compute lookahead distance based on speed
+    lookahead_distance = max(Kdd * speed, min_lookahead_distance)
+
+    # Find the target point on the path within the lookahead distance
+    target_point = None
+    for i in range(closest_idx, len(path)):
+        if np.linalg.norm(np.array(path[i]) - current_pos) >= lookahead_distance:
+            target_point = np.array(path[i])
+            break
+
+    if target_point is None:
+        target_point = np.array(path[-1])
+
+    # Compute vector to target
     path_vector = target_point - current_pos
-    
-    # Calculate the angle (alpha) between the vehicle's direction and the direction of the vector towards the target point
-    alpha = np.arctan2(path_vector[1], path_vector[0])  # Using np.arctan2 to obtain the 2D angle
 
-    # Vehicle parameters
-    L = 2.0  # Distance between the front and rear axles of the vehicle (in meters)
-    speed_vehicule = 1.0  # Assumed speed of the vehicle (1 m/s)
-    Kdd = 0.5  # Scaling factor for the following distance (looks ahead)
+    # Compute desired angle
+    alpha = np.arctan2(path_vector[1], path_vector[0])
 
-    # Dynamic calculation of the following distance (ld) based on the vehicle's speed
-    ld = Kdd * speed_vehicule  # The following distance is proportional to the vehicle's speed (in meters)
+    # Compute vehicle's current orientation
+    dx = pos_x_temp[-1] - pos_x_temp[-2]
+    dy = pos_y_temp[-1] - pos_y_temp[-2]
+    current_angle = np.arctan2(dy, dx)
 
-    # Calculate the steering angle (delta) using the Pure Pursuit formula
-    steering_angle = np.arctan((2 * L * np.sin(alpha)) / ld)  
+    # Compute angular error
+    angle_error = alpha - current_angle
+    angle_error = np.arctan2(np.sin(angle_error), np.cos(angle_error))  # Normalize to [-pi, pi]
 
-    return steering_angle  # Return the calculated steering angle, which will be used to control the vehicle's direction
+    # Compute steering angle using Pure Pursuit formula
+    steering_angle = np.arctan((2 * L * np.sin(angle_error)) / lookahead_distance)
 
+    # Apply steering angle limit
+    steering_angle = max(-max_steering_angle, min(max_steering_angle, steering_angle))
+
+    return steering_angle

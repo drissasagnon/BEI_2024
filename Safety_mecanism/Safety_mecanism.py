@@ -1,60 +1,39 @@
 import time
 import os
 import numpy as np
+from Lateral_control.lateral_control_pure_pursuit import lateral_control_pure_pursuit
 
-def safety_mecanism(vehicle_model, button_signal, path, vehicle_position, speed, callback=None):
+def safety_mecanism(button_signal, path, vehicle_position, speed, callback=None):
     """
-    Handles vehicle safety in case of ECU failure.
+    Mode sécurité en cas de défaillance ECU : ralentissement, déviation et arrêt.
 
-    :param vehicle_model: Vehicle model containing position and orientation.
-    :param button_signal: Indicates whether the failure button is activated (True/False).
-    :param path: Vehicle trajectory.
-    :param vehicle_position: Current vehicle position as a tuple (x, y).
-    :param speed: Current vehicle speed.
-    :param callback: Function to handle log messages (optional).
+    :param vehicle_model: Objet modèle du véhicule.
+    :param button_signal: Booléen indiquant si le bouton ECU Failure est activé.
+    :param path: Trajectoire de base du véhicule.
+    :param vehicle_position: Position actuelle (x, y).
+    :param speed: Vitesse actuelle du véhicule.
+    :param callback: Fonction pour afficher des messages (optionnel).
+    :return: steering_angle calculé.
     """
     if not button_signal:
-        return
+        return 0  # Pas d'erreur, retour angle neutre
 
-    # Use callback for messages, fallback to print
-    if callback:
-        callback("Failure detected! Activating safe mode.")
-        callback("ECU failure reported to lateral controller.")
-        callback("Hazard lights and warnings activated.")
-    else:
-        print("Failure detected! Activating safe mode.")
-        print("ECU failure reported to lateral controller.")
-        print("Hazard lights and warnings activated.")
+    # === Génération de la nouvelle trajectoire décalée pour le stationnement ===
+    parking_trajectory = []
+    shift_distance = 0.5  # Décalage latéral de 0.25m vers la droite
 
-    target_speed = max(0, speed - 0.5)
-    if callback:
-        callback(f"Reducing vehicle speed: {target_speed} m/s")
-    else:
-        print(f"Reducing vehicle speed: {target_speed} m/s")
+    for i in range(len(path) - 1):
+        current = np.array(path[i])
+        next_point = np.array(path[i + 1])
 
-    vehicle_model.update_position(0, target_speed, 1)
+        # Calcul du vecteur directionnel
+        direction_vector = next_point - current
+        unit_vector = direction_vector / (np.linalg.norm(direction_vector) + 1e-6)  # Normalisation
+        normal_vector = np.array([-unit_vector[1], unit_vector[0]])  # Perpendiculaire (décalage à droite)
 
-    while target_speed > 0:
-        time.sleep(1)
-        target_speed = max(0, target_speed - 0.5)
-        vehicle_model.update_position(0, target_speed, 1)
-        if callback:
-            callback(f"Controlled stop in progress. Current speed: {target_speed} m/s")
-        else:
-            print(f"Controlled stop in progress. Current speed: {target_speed} m/s")
-
-    if callback:
-        callback("Vehicle stopped in a safe zone.")
-        callback("Emergency call sent to rescue services.")
-    else:
-        print("Vehicle stopped in a safe zone.")
-        print("Emergency call sent to rescue services.")
+        # Déplacement du point vers la droite
+        new_point = current - shift_distance * normal_vector
+        parking_trajectory.append(tuple(new_point))
 
 
-    # Log failure details for diagnostics
-    log_dir = os.path.join(os.getcwd(), "Safety_mecanism")
-    log_file_path = os.path.join(log_dir, "log.txt")
-    with open(log_file_path, "a") as log_file:
-        log_file.write(f"Failure detected. Final position: {vehicle_position}\n")
-        log_file.write(f"Incident time: {time.strftime('%Y-%m-%d %H:%M:%S')}\n")
-        log_file.write("Safe mode activated and vehicle stopped.\n")
+    return parking_trajectory

@@ -1,0 +1,14 @@
+{
+    "_comments": {
+        "lookahead_gain": "Gain factor for the lookahead distance calculation",
+        "min_lookahead_distance": "Minimum lookahead distance (meters)",
+        "default_speed": "Default vehicle speed (m/s)",
+        "max_steering_angle_deg": "Maximum steering angle (degrees)",
+        "L": "Wheelbase of the vehicle (meters)"
+    },
+    "lookahead_gain": 0.1,
+    "min_lookahead_distance": 1.0,
+    "default_speed": 1.0,
+    "max_steering_angle_deg": 30,
+    "L": 2.0
+}

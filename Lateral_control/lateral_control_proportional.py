@@ -1,6 +1,12 @@
+####################################################################
+#                       BEI EasyMile                               #
+#   Moez CHAGRAOUI, Rayen YADIR, Yassine ABDELILLAH, Drissa SAGNON #
+####################################################################
+# lateral_control_proportional.py
+
 import numpy as np
 
-def lateral_control(pos_x_temp, pos_y_temp, path):
+def lateral_control_proportional(pos_x_temp, pos_y_temp, path):
     """
     Proportional lateral controller to adjust the vehicle's steering angle based on the angular error.
     """
@@ -37,4 +43,3 @@ def lateral_control(pos_x_temp, pos_y_temp, path):
     steering_angle = k_p * angle_error  # Calculation of the steering angle
 
     return steering_angle  # Return the adjusted steering angle
-
